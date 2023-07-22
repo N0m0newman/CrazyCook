@@ -121,6 +121,7 @@ public class Shop : MonoBehaviour
         {
             Ingredients ingred = keyValuePair.Key;
             int amount = keyValuePair.Value;
+            if (amount == 0) continue;
             order += amount.ToString() + "x " + ingred + "\n";
             order.Replace('\n', '\n');
             mealComponents.text = order;
