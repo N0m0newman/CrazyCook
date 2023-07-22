@@ -20,6 +20,7 @@ public class IngredientObject : MonoBehaviour
         UnityEngine.Debug.Log(spriteRenderer);
         UnityEngine.Debug.Log(ingredient);
         spriteRenderer.sprite = ingredient.RawSprite;
+        gameObject.layer = 7;
     }
 
     public void Setup()

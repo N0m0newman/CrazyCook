@@ -14,7 +14,7 @@ public class Shop : MonoBehaviour
     [SerializeField]
     public TextMeshProUGUI goldCoinAmount;
     [SerializeField]
-    public TextMeshProUGUI mealComponents;
+    public TextMeshPro mealComponents;
     [SerializeField]
     public Plate plate;
 
