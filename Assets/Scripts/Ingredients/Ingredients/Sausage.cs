@@ -8,6 +8,7 @@ public class Sausage : Ingredient
     {
         name = "Sausage";
         cost = 6;
+        cookTime = 12;
         cookstate = Cookstate.RAW;
         RawSprite = Resources.Load<Sprite>("Sprites/Sausage_Raw");
         CookedSprite = Resources.Load<Sprite>("Sprites/Sausage_Cooked");

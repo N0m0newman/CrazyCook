@@ -9,6 +9,7 @@ public class Bacon : Ingredient
         name = "Bacon";
         cost = 3;
         cookstate = Cookstate.RAW;
+        cookTime = 5;
         RawSprite = Resources.Load<Sprite>("Sprites/Bacon_Raw");
         CookedSprite = Resources.Load<Sprite>("Sprites/Bacon_Cooked");
     }

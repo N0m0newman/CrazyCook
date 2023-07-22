@@ -6,6 +6,7 @@ public class Egg : Ingredient
     {
         name = "Egg";
         cost = 8;
+        cookTime = 9;
         cookstate = Cookstate.RAW;
         RawSprite = Resources.Load<Sprite>("Sprites/Egg_Raw");
         CookedSprite = Resources.Load<Sprite>("Sprites/Egg_Cooked");

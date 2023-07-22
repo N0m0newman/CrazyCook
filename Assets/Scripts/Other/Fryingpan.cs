@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Fryingpan : MonoBehaviour
@@ -12,19 +14,34 @@ public class Fryingpan : MonoBehaviour
     public GameObject cookingObject;
     IngredientObject ingredientObject;
 
+    [SerializeField]
+    public TextMeshPro CookingTimer;
+
+
+    private CircleCollider2D collider; 
+
+    void Start()
+    {
+        collider = GetComponent<CircleCollider2D>();
+    }
+
     public void startCooking()
     {
         isCooking = true;
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        UnityEngine.Debug.Log("Collision");
+        if (!readyToCook) return;
         ingredientObject = collision.gameObject.GetComponent<IngredientObject>();
-        if(ingredientObject.ingredient.cookstate == Ingredient.Cookstate.RAW)
+        if (ingredientObject.ingredient.cookstate == Ingredient.Cookstate.RAW && !ingredientObject.isDragging)
         {
+            ingredientObject.transform.position = collider.bounds.center;
             readyToCook = false;
             ingredientObject.ingredient.cookstate = Ingredient.Cookstate.COOKING;
+            maxCookDown = ingredientObject.ingredient.cookTime;
+            CookingTimer.gameObject.SetActive(true);
+            CookingTimer.text = maxCookDown.ToString();
             ingredientObject.isDragging = false;
             ingredientObject.isGrabbable = false;
             isCooking = true;
@@ -33,8 +50,12 @@ public class Fryingpan : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        readyToCook = true;
-        countdownTime = maxCookDown;
+        if(!readyToCook && !isCooking)
+        {
+            readyToCook = true;
+            countdownTime = maxCookDown;
+            CookingTimer.gameObject.SetActive(false);
+        }
     }
 
     void Update()
@@ -43,12 +64,12 @@ public class Fryingpan : MonoBehaviour
         {
             if(countdownTime > 0)
             {
-                UnityEngine.Debug.Log(Mathf.FloorToInt(countdownTime % 60));
                 countdownTime -= Time.deltaTime;
+                CookingTimer.text = FormatTime(countdownTime);
             } else
             {
-                UnityEngine.Debug.Log("Cooked!");
                 countdownTime = 0;
+                CookingTimer.text = "Cooked!";
                 isCooking = false;
                 ingredientObject.isGrabbable = true;
                 ingredientObject.ingredient.cookstate = Ingredient.Cookstate.COOKED;
@@ -57,5 +78,12 @@ public class Fryingpan : MonoBehaviour
                 ingredientObject = null;
             }
         }
+    }
+
+    string FormatTime(float timeToDisplay)
+    {
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float sec = Mathf.FloorToInt(timeToDisplay % 60);
+        return string.Format("{0:00}:{1:00}", minutes, sec);
     }
 }

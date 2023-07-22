@@ -21,6 +21,7 @@ public class Toast : Ingredient
     {
         name = "Toast";
         cost = 1;
+        cookTime = 12;
         cookstate = Cookstate.RAW;
         RawSprite = Resources.Load<Sprite>("Sprites/Toast_Raw");
         CookedSprite = Resources.Load<Sprite>("Sprites/Toast_Cooked");
