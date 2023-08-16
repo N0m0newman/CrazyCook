@@ -14,7 +14,7 @@ public abstract class Ingredient
     public Cookstate cookstate;
     //cost of each ingredient
     public int cost;
-    public float cookTime = 0f;
+    public float cookTime = 3f;
 
     //Cookstate essential to stop same ingredient being cooked again
     public enum Cookstate

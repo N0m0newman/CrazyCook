@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Fryingpan : MonoBehaviour
 {
-    public float maxCookDown = 5f;
     public float countdownTime = 5f;
     public bool isCooking = false;
     public bool readyToCook = true;
@@ -36,12 +35,13 @@ public class Fryingpan : MonoBehaviour
         ingredientObject = collision.gameObject.GetComponent<IngredientObject>();
         if (ingredientObject.ingredient.cookstate == Ingredient.Cookstate.RAW && !ingredientObject.isDragging)
         {
+            //Item left on pan should start cooking
             ingredientObject.transform.position = collider.bounds.center;
             readyToCook = false;
             ingredientObject.ingredient.cookstate = Ingredient.Cookstate.COOKING;
-            maxCookDown = ingredientObject.ingredient.cookTime;
+            countdownTime = ingredientObject.ingredient.cookTime;
             CookingTimer.gameObject.SetActive(true);
-            CookingTimer.text = maxCookDown.ToString();
+            CookingTimer.text = ingredientObject.ingredient.cookTime.ToString();
             ingredientObject.isDragging = false;
             ingredientObject.isGrabbable = false;
             isCooking = true;
@@ -53,7 +53,7 @@ public class Fryingpan : MonoBehaviour
         if(!readyToCook && !isCooking)
         {
             readyToCook = true;
-            countdownTime = maxCookDown;
+            countdownTime = 0;
             CookingTimer.gameObject.SetActive(false);
         }
     }
